@@ -7,9 +7,11 @@
     (showProduct)="onShowDetail($event)"
   ></app-product>
   <div class="product-detail" [class.active]="showProductDetail">
-    <div>
+    <div *ngIf="productChosen">
       <button (click)="toggleProductDetail()">Close</button>
-      Contenido
+      <h1>{{ productChosen.title }}</h1>
+      <img [src]="productChosen.image" alt="" />
+      <p>{{ productChosen.description }}</p>
     </div>
   </div>
 </div>
