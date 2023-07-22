@@ -5,27 +5,25 @@ import { Product } from '../../models/product.model';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss']
+  styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent {
-
   @Input() product: Product = {
     id: '',
     price: 0,
-    images: [],
+    image: '',
     title: '',
     category: {
-      id:'',
-      name:'',
+      id: '',
+      name: '',
     },
-    description: ''
+    description: '',
   };
   @Output() addedProduct = new EventEmitter<Product>();
 
-  constructor() { }
+  constructor() {}
 
   onAddToCart() {
     this.addedProduct.emit(this.product);
   }
-
 }
