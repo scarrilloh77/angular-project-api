@@ -11,7 +11,6 @@ import { User } from 'src/app/models/user.model';
 export class NavComponent implements OnInit {
   activeMenu = false;
   counter = 0;
-  token = '';
   profile: User | null = null;
 
   constructor(
@@ -31,16 +30,9 @@ export class NavComponent implements OnInit {
 
   login() {
     this.authService
-      .login('scarrillo@gmail.com', '12345667')
+      .loginAndGet('scarrillo@gmail.com', '12345667')
       .subscribe((res) => {
-        this.token = res.access_token;
-        this.getProfile();
+        this.profile = res;
       });
-  }
-
-  getProfile() {
-    this.authService.profile(this.token).subscribe((res) => {
-      this.profile = res;
-    });
   }
 }
