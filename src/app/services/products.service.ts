@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { retry } from 'rxjs/operators';
 
 import {
   CreateProductDTO,
@@ -11,7 +12,7 @@ import {
   providedIn: 'root',
 })
 export class ProductsService {
-  private apiUrl = 'https://fakestoreapi.com/products';
+  private apiUrl = 'https://fakestoreapi.com/productss';
 
   constructor(private http: HttpClient) {}
 
@@ -25,7 +26,7 @@ export class ProductsService {
     }
     console.log('params', params);
 
-    return this.http.get<Product[]>(this.apiUrl, { params });
+    return this.http.get<Product[]>(this.apiUrl, { params }).pipe(retry(3));
   }
 
   getProduct(id: string) {
