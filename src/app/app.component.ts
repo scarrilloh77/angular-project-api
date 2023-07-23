@@ -10,6 +10,7 @@ import { UsersService } from './services/users.service';
 export class AppComponent {
   imgParent = '';
   showImg = true;
+  token = '';
 
   constructor(
     private authService: AuthService,
@@ -37,6 +38,13 @@ export class AppComponent {
       .login('scarrillo@gmail.com', '12345667')
       .subscribe((res) => {
         console.log('resLogin', res);
+        this.token = res.access_token;
       });
+  }
+
+  getProfile() {
+    this.authService.profile(this.token).subscribe((res) => {
+      console.log('resLogin', res);
+    });
   }
 }
