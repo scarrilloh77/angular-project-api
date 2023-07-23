@@ -71,6 +71,35 @@ export class ProductsComponent implements OnInit {
     );
   }
 
+  // callback hell --- ❌
+  // readAndUpdate(id: string) {
+  //   this.productsService.getProduct(id).subscribe((data) => {
+  //     const product = data;
+  //     this.productsService
+  //       .update(product.id, { title: 'change' })
+  //       .subscribe((rtaUpd) => console.log(rtaUpd));
+  //   });
+  // }
+
+  // Without callback hell --- When there are dependences ✅
+  readAndUpdateWithDependencies(id: string) {
+    this.productsService
+      .fetchWithDependenciesReadAndUpdate(id, { title: 'change' })
+      .subscribe((rtaUpd) => {
+        console.log(rtaUpd);
+      });
+  }
+
+  // Without callback hell --- When there aren't dependences (parallel processes) ✅
+  readAndUpdateWithoutDependencies(id: string) {
+    this.productsService
+      .fetchWithoutDependenciesReadAndUpdate(id, { title: 'Change' })
+      .subscribe((response) => {
+        const read = response[0];
+        const update = response[1];
+      });
+  }
+
   createNewProduct() {
     const product: CreateProductDTO = {
       title: 'test product',

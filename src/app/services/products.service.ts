@@ -5,8 +5,8 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { retry, catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { retry, catchError, map, switchMap } from 'rxjs/operators';
+import { throwError, zip } from 'rxjs';
 
 import {
   CreateProductDTO,
@@ -43,6 +43,18 @@ export class ProductsService {
         })
       )
     );
+  }
+
+  fetchWithDependenciesReadAndUpdate(id: string, data: UpdateProductDTO) {
+    return this.getProduct(id).pipe(
+      switchMap((product) => {
+        return this.update(product.id, data); //depend of first service's response.
+      })
+    );
+  }
+
+  fetchWithoutDependenciesReadAndUpdate(id: string, data: UpdateProductDTO) {
+    return zip(this.getProduct(id), this.update(id, data));
   }
 
   getProduct(id: string) {
