@@ -14,6 +14,7 @@ import {
   UpdateProductDTO,
 } from './../models/product.model';
 import { environment } from '../../environments/environment';
+import { checkTime } from '../interceptors/time.interceptor';
 
 @Injectable({
   providedIn: 'root',
@@ -35,14 +36,16 @@ export class ProductsService {
     }
     console.log('params', params);
 
-    return this.http.get<Product[]>(this.apiUrl, { params }).pipe(
-      retry(3),
-      map((products) =>
-        products.map((item) => {
-          return { ...item, taxes: 0.19 * item.price };
-        })
-      )
-    );
+    return this.http
+      .get<Product[]>(this.apiUrl, { params, context: checkTime() }) // This will be apply time interceptor
+      .pipe(
+        retry(3),
+        map((products) =>
+          products.map((item) => {
+            return { ...item, taxes: 0.19 * item.price };
+          })
+        )
+      );
   }
 
   fetchWithDependenciesReadAndUpdate(id: string, data: UpdateProductDTO) {
