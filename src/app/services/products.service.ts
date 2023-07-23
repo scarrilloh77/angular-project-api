@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import {
@@ -15,8 +15,17 @@ export class ProductsService {
 
   constructor(private http: HttpClient) {}
 
-  getAllProducts() {
-    return this.http.get<Product[]>(this.apiUrl);
+  getAllProducts(limit?: number, sort?: string) {
+    let params = new HttpParams();
+    if (limit) {
+      params = params.set('limit', limit);
+    }
+    if (sort) {
+      params = params.set('sort', sort);
+    }
+    console.log('params', params);
+
+    return this.http.get<Product[]>(this.apiUrl, { params });
   }
 
   getProduct(id: string) {

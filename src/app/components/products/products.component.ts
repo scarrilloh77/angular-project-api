@@ -30,6 +30,8 @@ export class ProductsComponent implements OnInit {
       name: '',
     },
   };
+  limit = 10;
+  sort = 'asc';
 
   constructor(
     private storeService: StoreService,
@@ -97,5 +99,13 @@ export class ProductsComponent implements OnInit {
       this.products.splice(productIndex, 1);
       this.showProductDetail = false;
     });
+  }
+
+  changeSort(sortType: string) {
+    this.productsService
+      .getAllProducts(this.limit, sortType)
+      .subscribe((data) => {
+        this.products = data;
+      });
   }
 }

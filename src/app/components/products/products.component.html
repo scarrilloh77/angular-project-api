@@ -1,4 +1,6 @@
 <button (click)="createNewProduct()">create</button>
+<button (click)="changeSort('asc')">ASC</button>
+<button (click)="changeSort('desc')">DESC</button>
 <div class="products--grid">
   <app-product
     [product]="product"
