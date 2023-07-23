@@ -10,9 +10,10 @@
     <div *ngIf="productChosen">
       <button (click)="toggleProductDetail()">Close</button>
       <h1>{{ productChosen.title }}</h1>
-      <img [src]="productChosen.image" alt="" />
+      <img [src]="productChosen.image" alt="" class="image-customer" />
       <p>{{ productChosen.description }}</p>
       <button (click)="updateProduct()">Editar</button>
+      <button (click)="deleteProduct()">Eliminar</button>
     </div>
   </div>
 </div>
