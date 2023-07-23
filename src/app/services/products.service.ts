@@ -12,7 +12,7 @@ import {
   providedIn: 'root',
 })
 export class ProductsService {
-  private apiUrl = 'https://fakestoreapi.com/productss';
+  private apiUrl = '/api/products';
 
   constructor(private http: HttpClient) {}
 
