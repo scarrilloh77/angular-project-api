@@ -1,6 +1,7 @@
 <button (click)="createNewProduct()">create</button>
 <button (click)="changeSort('asc')">ASC</button>
 <button (click)="changeSort('desc')">DESC</button>
+<button (click)="onShowDetail('12312421')">Detalle not found</button>
 <div class="products--grid">
   <app-product
     [product]="product"
@@ -9,6 +10,7 @@
     (showProduct)="onShowDetail($event)"
   ></app-product>
   <div class="product-detail" [class.active]="showProductDetail">
+    {{ statusDetail }}
     <div *ngIf="productChosen">
       <button (click)="toggleProductDetail()">Close</button>
       <h1>{{ productChosen.title }}</h1>
