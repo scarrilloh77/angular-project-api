@@ -5,7 +5,7 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, map } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 import {
@@ -35,7 +35,14 @@ export class ProductsService {
     }
     console.log('params', params);
 
-    return this.http.get<Product[]>(this.apiUrl, { params }).pipe(retry(3));
+    return this.http.get<Product[]>(this.apiUrl, { params }).pipe(
+      retry(3),
+      map((products) =>
+        products.map((item) => {
+          return { ...item, taxes: 0.19 * item.price };
+        })
+      )
+    );
   }
 
   getProduct(id: string) {
